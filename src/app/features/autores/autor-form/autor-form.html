@@ -1,0 +1,16 @@
+<div>
+  <h2>{{ isEditMode ? 'Editar' : 'Novo' }} Gênero</h2>
+  
+  <form [formGroup]="autorForm" (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+      <label for="nome" class="form-label">Nome</label>
+      <input type="text" id="nome" formControlName="nome" class="form-control">
+      <div *ngIf="autorForm.controls['nome'].invalid && autorForm.controls['nome'].touched" class="text-danger">
+        Nome é obrigatório.
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-success" [disabled]="autorForm.invalid">Salvar</button>
+    <a [routerLink]="['/autores']" class="btn btn-secondary ms-2">Cancelar</a>
+  </form>
+</div>

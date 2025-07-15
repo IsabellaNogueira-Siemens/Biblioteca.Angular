@@ -1,0 +1,35 @@
+<div>
+  <h2>Lista de Gêneros</h2>
+  <a [routerLink]="['/generos/novo']" class="btn btn-primary mb-3">Novo Gênero</a>
+
+  <!-- Usamos o async pipe aqui -->
+  <table class="table table-striped" *ngIf="generos$ | async as generos; else loading">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Se generos for um array vazio, mostramos uma mensagem -->
+      <tr *ngIf="generos.length === 0">
+        <td colspan="3" class="text-center">Nenhum gênero encontrado.</td>
+      </tr>
+      <!-- O ngFor agora itera sobre a variável 'generos' criada pelo 'as' -->
+      <tr *ngFor="let genero of generos">
+        <td>{{ genero.id }}</td>
+        <td>{{ genero.nome }}</td>
+        <td>
+          <a [routerLink]="['/generos/editar', genero.id]" class="btn btn-sm btn-warning me-2">Editar</a>
+          <button (click)="deleteGenero(genero.id)" class="btn btn-sm btn-danger">Excluir</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Template para mostrar enquanto os dados estão carregando -->
+  <ng-template #loading>
+    <p>Carregando gêneros...</p>
+  </ng-template>
+</div>

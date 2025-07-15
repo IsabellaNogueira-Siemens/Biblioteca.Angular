@@ -1,0 +1,41 @@
+<div>
+  <h2>{{ isEditMode ? 'Editar' : 'Novo' }} Livro</h2>
+  
+  <form [formGroup]="livroForm" (ngSubmit)="onSubmit()">
+    <!-- Campo Título -->
+    <div class="mb-3">
+      <label for="titulo" class="form-label">Título</label>
+      <input type="text" id="titulo" formControlName="titulo" class="form-control">
+      <div *ngIf="livroForm.controls['titulo'].invalid && livroForm.controls['titulo'].touched" class="text-danger">
+        Título é obrigatório.
+      </div>
+    </div>
+
+    <!-- Dropdown de Autores -->
+    <div class="mb-3">
+      <label for="autorId" class="form-label">Autor</label>
+      <select id="autorId" formControlName="autorId" class="form-select">
+        <option [ngValue]="null" disabled>Selecione um autor</option>
+        <option *ngFor="let autor of autores" [ngValue]="autor.id">{{ autor.nome }}</option>
+      </select>
+      <div *ngIf="livroForm.controls['autorId'].invalid && livroForm.controls['autorId'].touched" class="text-danger">
+        Autor é obrigatório.
+      </div>
+    </div>
+
+    <!-- Dropdown de Gêneros -->
+    <div class="mb-3">
+      <label for="generoId" class="form-label">Gênero</label>
+      <select id="generoId" formControlName="generoId" class="form-select">
+        <option [ngValue]="null" disabled>Selecione um gênero</option>
+        <option *ngFor="let genero of generos" [ngValue]="genero.id">{{ genero.nome }}</option>
+      </select>
+      <div *ngIf="livroForm.controls['generoId'].invalid && livroForm.controls['generoId'].touched" class="text-danger">
+        Gênero é obrigatório.
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-success" [disabled]="livroForm.invalid">Salvar</button>
+    <a [routerLink]="['/livros']" class="btn btn-secondary ms-2">Cancelar</a>
+  </form>
+</div>

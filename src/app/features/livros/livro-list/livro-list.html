@@ -1,0 +1,39 @@
+<div>
+  <h2>Lista de Livros</h2>
+  <a [routerLink]="['/livros/novo']" class="btn btn-primary mb-3">Novo Livro</a>
+
+  <!-- Usamos o async pipe aqui -->
+  <table class="table table-striped" *ngIf="livros$ | async as livros; else loading">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Título</th>
+        <th>Autor</th>
+        <th>Gênero</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Se livros for um array vazio, mostramos uma mensagem -->
+      <tr *ngIf="livros.length === 0">
+        <td colspan="5" class="text-center">Nenhum livro encontrado.</td>
+      </tr>
+      <!-- O ngFor agora itera sobre a variável 'livros' criada pelo 'as' -->
+      <tr *ngFor="let livro of livros">
+        <td>{{ livro.id }}</td>
+        <td>{{ livro.titulo }}</td>
+        <td>{{ livro.nomeAutor }}</td>
+        <td>{{ livro.nomeGenero }}</td>
+        <td>
+          <a [routerLink]="['/livros/editar', livro.id]" class="btn btn-sm btn-warning me-2">Editar</a>
+          <button (click)="deleteLivro(livro.id)" class="btn btn-sm btn-danger">Excluir</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Template para mostrar enquanto os dados estão carregando -->
+  <ng-template #loading>
+    <p>Carregando livros...</p>
+  </ng-template>
+</div>

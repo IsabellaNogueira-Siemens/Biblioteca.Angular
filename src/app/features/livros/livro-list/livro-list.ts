@@ -23,11 +23,12 @@ export class LivroListComponent implements OnInit {
   }
 
   loadLivros(): void {
-    // Não usamos mais .subscribe(). Apenas atribuímos o Observable.
+    // Não usamos mais .subscribe(). Apenas atribuímos o Observable. Treta demais usar .subscribe, bug onde a lista não atualiza
+    // Agora, usamos o operador catchError para lidar com erros <- boas praticas
     this.livros$ = this.livroService.getLivros().pipe(
       catchError(error => {
         console.error('Erro ao buscar livros:', error);
-        // Retorna um observable com um array vazio em caso de erro
+        // Retorna um observable com um array vazio em caso de erro <- autlizando o erro e retornando um array vazio para evitar erros na UI e na lista
         return of([]);
       })
     );
@@ -38,7 +39,7 @@ export class LivroListComponent implements OnInit {
       this.livroService.deletarLivro(id).subscribe({
         next: () => {
           alert('Livro excluído com sucesso!');
-          // Para recarregar a lista, simplesmente chamamos o método de novo
+          // Para recarregar a lista, simplesmente chamamos o método de novo, famosa recursão
           this.loadLivros();
         },
         error: (err) => alert(err.error)

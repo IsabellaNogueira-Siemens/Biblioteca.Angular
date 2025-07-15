@@ -7,7 +7,7 @@ import { Livro, CriarLivroDto } from '../../../models/livro.model';
   providedIn: 'root'
 })
 export class LivroService {
-  private apiUrl = 'http://localhost:5004/api/livros'; // <- URL HTTP
+  private apiUrl = 'http://localhost:5004/api/livros'; // <- URL HTTP para a API de livros
 
   constructor(private http: HttpClient) { }
 
